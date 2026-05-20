@@ -67,6 +67,37 @@
 
 关键观察：**LLM 正确区分了"链上事实"和"缓存推断"**。在测试①中，模型主动标注了"缓存数据有1小时延迟，需注意合约状态可能已变化"。
 
+### 截图
+
+| 截图 |
+|------|
+| ![screenshot-01-form](assets/screenshot-01-form.png) |
+| ![screenshot-02-analysis](assets/screenshot-02-analysis.png) |
+| ![screenshot-03-context-blocks](assets/screenshot-03-context-blocks.png) |
+| ![screenshot-04-llm-result](assets/screenshot-04-llm-result.png) |
+
+### 运行方式
+
+```bash
+# 终端 1 — 后端
+cd approval-checker/backend && ./server
+
+# 终端 2 — 前端
+cd approval-checker/frontend && npm run dev
+```
+
+然后打开 http://localhost:3000
+
+### 项目结构
+
+```
+approval-checker/
+├── contracts/             # Foundry 合约 (SimpleToken + TokenShop, 3 tests ✅)
+├── backend/main.go        # Go 上下文装配引擎
+├── frontend/src/App.jsx   # React 前端 (MetaMask + 表单 + 上下文查看器)
+└── assets/                # 截图
+```
+
 ---
 
 ## 学习笔记
