@@ -55,14 +55,12 @@
 
 ### 截图
 
-> 以下截图来自 dapp/ 目录，展示完整的交互流程。
-
-| 界面 | 截图 |
-|------|------|
-| **Counter 主面板** — 连接 MetaMask 后直接读写合约 | ![Counter 面板](dapp/assets/screenshot-dapp-counter.png) |
-| **交易风险分析** — 选择操作、填写意图、分析风险 | ![风险分析器](dapp/assets/screenshot-risk-analyzer-v2.png) |
-| **交易解释器** — 输入交易哈希，解析链上事实与模型推断 | ![交易解释器](dapp/assets/screenshot-explainer-v2.png) |
-| **Token 信息** — SimpleToken 合约部署与交互 | ![Token 信息](dapp/assets/screenshot-token-info.png) |
+| 截图 |
+|------|
+| ![screenshot-dapp-counter](dapp/assets/screenshot-dapp-counter.png) |
+| ![screenshot-risk-analyzer-v2](dapp/assets/screenshot-risk-analyzer-v2.png) |
+| ![screenshot-explainer-v2](dapp/assets/screenshot-explainer-v2.png) |
+| ![screenshot-token-info](dapp/assets/screenshot-token-info.png) |
 
 ### 合约部署
 
