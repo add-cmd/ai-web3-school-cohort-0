@@ -18,6 +18,7 @@
 |------|------|------|:----:|
 | [2026-05-18](2026-05-18/) | AI 基础 + Web3 基础 | 交易解释器 + Counter dApp | ✅ |
 | [2026-05-19](2026-05-19/) | Prompt + Cryptography | 交易风险分析器 + SimpleToken | ✅ |
+| [2026-05-20](2026-05-20/) | Context | 钱包授权检查 Agent | 🚧 |
 
 ## 目录结构
 
@@ -28,6 +29,7 @@ learning-plan.md       # 学习计划
 templates/             # 模板文件
  2026-05-18/            # Day 1: LLM + Web3 基础 + 交易解释器 ✅
  2026-05-19/            # Day 2: Prompt + Cryptography + 交易风险分析器 ✅
+ 2026-05-20/            # Day 3: Context + 钱包授权检查 Agent 🚧
 ```
 
 ## 隐私提醒
