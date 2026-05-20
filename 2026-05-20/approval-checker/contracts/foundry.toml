@@ -1,0 +1,12 @@
+[profile.default]
+src = "src"
+out = "out"
+lib_paths = ["lib"]
+solc_version = "0.8.26"
+evm_version = "paris"
+
+[rpc_endpoints]
+sepolia = "${RPC_URL}"
+
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}" }

@@ -3,7 +3,8 @@
 > **日期：** 2026-05-20
 > **章节：** Context（上下文）
 > **核心：** Context Engineering — 为 LLM 装配可信上下文
-> **技术栈：** Python + DeepSeek API + Sepolia RPC
+> **技术栈：** Foundry (Solidity) + Go (Backend) + React (Frontend) + DeepSeek (LLM)
+> **网络：** Sepolia 测试网
 
 ---
 
