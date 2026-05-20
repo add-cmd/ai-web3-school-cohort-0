@@ -1,8 +1,28 @@
-# Counter DApp — 交易解释器最小实践
+# Counter DApp — 交易解释器 + 风险分析器
 
-> **归属：** AI × Web3 School Day 1 — LLM 章节最小实践
+> **归属：** AI × Web3 School
+> - Day 1 — LLM 章节最小实践：交易解释器（事后分析）
+> - Day 2 — Prompt 章节最小实践：风险分析器（事前防护）
+>
 > **技术栈：** Foundry (Solidity) + Go (Backend) + React (Frontend) + DeepSeek (LLM)
 > **网络：** Sepolia 测试网
+
+---
+
+## 功能
+
+### 🛡 交易风险分析器（Prompt 最小实践）
+**先分析，再签名。** 输入交易参数和意图，LLM 返回风险评估。
+
+三组测试用例：
+| 测试 | 操作 | 风险等级 |
+|------|------|---------|
+| ① | Counter.increment() | 🟢 **Low** |
+| ② | Token.approve(恶意地址, ∞) | 🚨 **Critical** |
+| ③ | Token.transfer(恶意地址) + 意图="转给朋友" | 🔴 **High** |
+
+### 🔍 交易解释器（LLM 最小实践）
+**事后分析。** 输入交易哈希，解析链上数据。
 
 ---
 
