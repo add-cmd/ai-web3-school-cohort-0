@@ -1,160 +1,64 @@
-# 每日学习记录 — 2026-05-18
+# Day 1 — 交易解释器
 
-## 今日课程
-**Day 1：AI 基础入门 + Web3 基础快速过**
-
-今天走双线并行：
-- **AI 线**（~2h）：读 LLM 章节，建立模型理解
-- **Web3 线**（~1h）：快速过 Network、Wallet、Smart Contract 三个核心章节，聚焦 AI × Web3 视角
+> **日期：** 2026-05-18
+> **章节：** LLM / Network / Wallet / Smart Contract
+> **技术栈：** Python + DeepSeek API
 
 ---
 
-## 今日路径
+## 项目：交易解释器
 
-### 最小路径（必做，~2h）
-- [x] ✅ [LLM](https://aiweb3.school/zh/handbook/ai/llm/) — 理解 Token、Embedding、Transformer、Hallucination
-- [x] ✅ [Network](https://aiweb3.school/zh/handbook/web3/network/) — 区块、共识、L2、交易生命周期
+`tx-explainer.py` 是一个独立的 Python 脚本，通过 RPC 获取链上交易数据，调用 DeepSeek API 生成结构化解释。
 
-### 推荐路径（~3h，包含最小路径）
-- [x] ✅ 上面两条 + [Wallet](https://aiweb3.school/zh/handbook/web3/wallet/) — EOA、Transaction、Gas、Explorer
-- [x] ✅ [Smart Contract](https://aiweb3.school/zh/handbook/web3/smart-contract/) — Solidity、ABI、Event、调用链路
+### 核心设计
 
-### 挑战路径（有余力做）
-- [ ] 跑通一次 LLM API 调用（OpenAI / DeepSeek 都行）
-- [ ] 在区块浏览器追一笔测试网交易
+严格区分**链上事实**与**模型推断**，符合「LLM 是推理入口，不是最终验证」原则：
+
+```
+交易哈希
+  → RPC 获取链上数据（交易详情、回执、合约字节码）
+    → 组装 Prompt（链上事实 + ABI 上下文）
+      → DeepSeek 结构化输出
+        ├── ✅ on_chain_facts     链上可验证的事实
+        ├── ⚠  model_inferences   模型推测的解释
+        ├── ❓  uncertainties      模型无法确认的部分
+        └── 🔐  user_checks       签名前检查清单
+```
+
+### 快速开始
+
+```bash
+# 确保 Hermes .env 中有 DEEPSEEK_API_KEY
+python3 tx-explainer.py <交易哈希>
+```
+
+### 示例
+
+```bash
+python3 tx-explainer.py 0xf40fcde4e23a7a99f82f0a4375c43bca51549e07696f80681460535f708556dc
+```
+
+### 依赖
+
+- `requests` — 调 DeepSeek API 和 RPC 节点
+- 环境变量 `DEEPSEEK_API_KEY`（从 Hermes `.env` 读取）
 
 ---
 
-## 学习笔记
+## 学习笔记（摘录）
 
-### 🔵 AI 线：LLM 核心认知
+### LLM 核心认知
 
-| 概念 | 一句话理解 | 工程启示 |
-|---|---|---|
-| **Token** | 模型处理文本的最小单位，中文 1 字 ≈ 1-2 token | 长文档/JSON/代码吃 token 很快，注意上下文预算 |
-| **Embedding** | 把文本转成向量，衡量语义相似度 | RAG 的基础，但向量相似 ≠ 事实正确 |
-| **Transformer** | 通过 Attention 关注上下文不同位置 | 擅长模式匹配，不是稳定数据库 |
-| **Hallucination** | 模型生成看似合理但不真实的内容 | 不是 bug，是概率模型的天性。用外部校验解决 |
-| **Multimodal** | 能处理文本+图片/音频 | 读懂截图、图表、错误弹窗 |
+| 概念 | 一句话理解 |
+|------|-----------|
+| **Token** | 模型处理文本的最小单位，中文 1 字 ≈ 1-2 token |
+| **Embedding** | 把文本转成向量，衡量语义相似度 |
+| **Transformer** | 通过 Attention 关注上下文不同位置 |
+| **Hallucination** | 模型生成看似合理但不真实的内容 |
+| **Multimodal** | 能处理文本+图片/音频 |
 
-**一句话定调：**
-> LLM 是推理入口，不是最终验证。
-> 模型输出是**候选结果**，不是事实本身。
+### 最小实践收获
 
-**AI × Web3 中的位置：**
-```
-LLM = 理解与生成层
- ↓ 配合
-数据层（RPC、索引器、预言机）
-编排层（Prompt、Context、RAG）
-执行层（工具调用、钱包、合约）
-安全层（Guard、人工确认、审计）
-```
-
----
-
-### 🟢 Web3 线：快速过基础
-
-#### 1. Network — 理解交易环境
-
-| 概念 | 核心认知 |
-|---|---|
-| **Block（区块）** | 交易按区块批量推进，不是每毫秒连续更新 |
-| **Consensus（共识）** | 网络决定"哪段历史有效"，不是单点说了算 |
-| **PoS** | 用质押+惩罚替代挖矿，验证者经济安全 |
-| **L2 / Rollup** | 低成本扩展，但带来桥、提现等待、跨链复杂度 |
-| **Testnet** | 测试流程不能替代主网安全审查 |
-
-**AI Agent 视角：** Agent 必须知道自己操作在哪条链（chain id），不能靠模型"猜"网络信息。工具应返回结构化网络信息：chain id、RPC 来源、区块高度、交易哈希。
-
-**最小实践：** 在测试网发一笔交易 → 在区块浏览器追踪 pending → confirmed 的全过程。
-
----
-
-#### 2. Wallet — 理解权限边界
-
-| 概念 | 核心认知 |
-|---|---|
-| **EOA（外部账户）** | 私钥控制，简单通用但私钥丢失难恢复 |
-| **Mnemonic（助记词）** | 高敏感秘密，任何应用索要都应视为危险 |
-| **Transaction（交易）** | 链上状态变更请求，按钮点击 ≠ 交易本身 |
-| **Gas** | 链上执行成本，余额不足会卡住 |
-| **Explorer** | 查看链上事实的窗口，不是链本身 |
-
-**三层动作风险不同：**
-```
-连接钱包 → 读取地址（低风险）
-签名消息 → 证明控制权（中风险）
-发送交易 → 改变链上状态（高风险，必须人工确认）
-```
-
-**AI Agent 视角：** AI 可以做理解、准备参数、检查风险，但**签名和权限不能交给模型**。AI 辅助 + 钱包授权 + 合约执行约束 = 合理设计。
-
----
-
-#### 3. Smart Contract — 理解链上规则
-
-| 概念 | 核心认知 |
-|---|---|
-| **Solidity** | EVM 主流合约语言，storage/msg.sender/event 是链上特有概念 |
-| **EVM** | 合约执行环境，决定 gas、计费、代码隔离 |
-| **ABI** | 应用与合约的接口说明，告诉你能调用什么，不保证调用安全 |
-| **Event** | 合约向外部留下的可索引日志，前端/索引器的重要数据源 |
-| **Upgrade** | 可升级更灵活，但也带来管理员权限和治理风险 |
-
-**完整调用链路（以"投票"为例）：**
-```
-前端读取钱包地址和网络
-  → 编码调用数据（ABI）
-  → 钱包展示交易、用户确认签名
-  → 交易广播到 RPC 节点
-  → 验证者打包进区块
-  → EVM 执行合约逻辑 → 成功则 emit event / 失败则 revert
-  → 前端监听回执 → 更新页面
-  → 索引器读取 event → 更新历史数据
-```
-
-**AI Agent 视角：** Agent 可以帮理解 ABI、生成调用参数、写测试用例，但合约负责执行边界。AI 做建议 → 钱包授权 → 合约执行 = 稳妥设计。
-
----
-
-## 打卡草稿
-
-```
-📖 Day 1 | AI × Web3 School
-主题：AI 基础入门 + Web3 基础 + LLM 最小实践
-
-【AI 线】LLM 核心认知：
-- LLM 是概率模型，输出 ≠ 事实
-- Token 是基本单位，中文 1 字 ≈ 1-2 token
-- Embedding 用于语义搜索，但向量相似 ≠ 事实正确
-- Hallucination 靠外部校验，不能只靠 Prompt
-- LLM = 推理入口，不是最终验证
-
-【AI 线 · 最小实践】交易解释器 (Foundry + Go + React)
-项目: github.com/add-cmd/ai-web3-school-cohort-0/tree/master/experiments/foundry-dapp
-- Smart Contract: Counter (Solidity/Foundry，7 tests ✅)
-- Backend: Go 连接 Sepolia RPC 读取链上数据
-- Frontend: React (viem) 连接 MetaMask 读写合约
-- LLM 集成: DeepSeek API 分析交易，输出区分：
-  ✅ 链上事实 | ⚠ 模型推断 | ❓ 不确定性 | 🔐 检查清单
-- 部署到 Sepolia 测试网 ✅ (0x6d8521408b803813a1A963f511C74fB96ea23bd2)
-- 合约可从前端 Increment/Decrement/SetCount 直接操作
-
-【Web3 线】三个核心章节快速过：
-- Network：区块按批推进，L2 减费用增复杂度
-- Wallet：连接/签名/交易三层风险不同，AI 可辅助不可签名
-- Smart Contract：ABI 是接口说明不是安全说明书，合约负责执行边界
-
-#AIxWeb3School #LLM #Foundry #Go #React #Sepolia #Day1
-```
-
-## 提交记录
-<!-- 打卡提交后记录链接 -->
-- [x] 四个核心章节阅读完成
-- [x] LLM 最小实践：交易解释器 DApp 完成
-- [ ] 打卡提交（WCB 平台）
-
-## 明日计划
-- [ ] Prompt 章节 — 如何写结构化提示词
-- [ ] Cryptography 章节 — 哈希、公私钥、签名（Web3 补漏）
+- LLM API 调用流程：组装 Prompt → 发送请求 → 解析结构化输出
+- 链上数据必须通过 RPC 获取，不能依赖模型「回忆」
+- ABI 作为 Few-shot 示例传递给模型，提高函数识别准确率
