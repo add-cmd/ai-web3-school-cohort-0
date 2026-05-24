@@ -19,6 +19,8 @@
 | [2026-05-18](2026-05-18/) | AI 基础 + Web3 基础 | 交易解释器 + Counter dApp | ✅ |
 | [2026-05-19](2026-05-19/) | Prompt + Cryptography | 交易风险分析器 + SimpleToken | ✅ |
 | [2026-05-20](2026-05-20/) | Context | 钱包授权检查 Agent | ✅ |
+| [2026-05-21](2026-05-21/) | RAG | Handbook Q&A 系统 | ✅ |
+| [2026-05-22](2026-05-22/) | Agent | DAO 提案研究 Agent (Go) | ✅ |
 
 ## 目录结构
 
@@ -30,6 +32,8 @@ templates/             # 模板文件
  2026-05-18/            # Day 1: LLM + Web3 基础 + 交易解释器 ✅
  2026-05-19/            # Day 2: Prompt + Cryptography + 交易风险分析器 ✅
  2026-05-20/            # Day 3: Context + 钱包授权检查 Agent ✅
+ 2026-05-21/            # Day 4: RAG + Handbook Q&A 系统 ✅
+ 2026-05-22/            # Day 5: Agent + DAO 提案研究 Agent (Go) ✅
 ```
 
 ## 隐私提醒
