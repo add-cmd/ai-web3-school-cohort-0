@@ -22,7 +22,8 @@
 | [2026-05-21](2026-05-21/) | RAG | Handbook Q&A 系统 | ✅ |
 | [2026-05-22](2026-05-22/) | Agent | DAO 提案研究 Agent (Go) | ✅ |
 | [2026-05-25](2026-05-25/) | Week 2 方向选择 | AgentPact MVP（Wallet / Permission / Safe Execution） | ✅ |
-| [2026-05-26](2026-05-26/) | Week 2 交付物整理 | 参考资料 + Backlog + Daily Note | 🔄 |
+| [2026-05-26](2026-05-26/) | Week 2 交付物整理 | 参考资料 + Backlog + Daily Note | ✅ |
+| [2026-05-28](2026-05-28/) | Foundry AA Demo | SimpleAccount + AccountFactory（CREATE2） | ✅ |
 
 ## 目录结构
 
@@ -37,7 +38,8 @@ templates/             # 模板文件
  2026-05-21/            # Day 4: RAG + Handbook Q&A 系统 ✅
  2026-05-22/            # Day 5: Agent + DAO 提案研究 Agent (Go) ✅
  2026-05-25/            # Day 6: Week 2 方向选择 + AgentPact MVP Design ✅
- 2026-05-26/            # Day 7: Week 2 交付物整理 (Refs + Backlog) 🔄
+ 2026-05-26/            # Day 7: Week 2 交付物整理 (Refs + Backlog) ✅
+ 2026-05-28/            # Day 8: Foundry AA Demo (SimpleAccount + Factory) ✅
 ```
 
 ## 隐私提醒
